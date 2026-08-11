@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
+import { initAnalytics } from "./lib/analytics";
 import { initSiteEnhancements } from "./site-enhancements";
 
 export const getRouter = () => {
@@ -14,7 +15,10 @@ export const getRouter = () => {
   });
 
   if (typeof window !== "undefined") {
-    window.setTimeout(() => initSiteEnhancements(), 0);
+    window.setTimeout(() => {
+      initAnalytics();
+      initSiteEnhancements();
+    }, 0);
   }
 
   return router;
