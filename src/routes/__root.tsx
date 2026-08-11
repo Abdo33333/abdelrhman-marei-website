@@ -12,6 +12,10 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
+const SITE_TITLE = "Marketing Strategist for GCC Businesses | Abdelrhman Marei";
+const SITE_DESCRIPTION =
+  "Marketing strategy and content strategy for growing GCC businesses. Abdelrhman Marei helps businesses turn unclear marketing into a clear strategy, stronger content, and a system designed around business growth.";
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -77,20 +81,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Growth Marketing Strategist — Board-Grade Advisory for GCC Operators" },
-      {
-        name: "description",
-        content:
-          "Independent Growth Marketing Strategist to founders, boards and executive teams across the GCC. I install governed marketing systems that convert spend into predictable, board-reported revenue.",
-      },
-      { property: "og:title", content: "Growth Marketing Strategist — Board-Grade Advisory for GCC Operators" },
-      {
-        property: "og:description",
-        content:
-          "Board-grade growth advisory for founder-led businesses across the GCC. Governed marketing systems that turn spend into predictable revenue.",
-      },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Abdelrhman Marei · Marketing Strategist" },
+      { property: "og:locale", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -133,7 +134,6 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );
