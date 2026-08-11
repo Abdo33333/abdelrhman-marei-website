@@ -58,11 +58,29 @@ function enhanceTestimonials() {
   if (document.querySelector("[data-enhancement='full_reviews']")) return;
 
   const section = findSectionByHeading(/testimonial|client review|what clients/i);
-  if (!section) return;
-
   const button = makeButton("View Full Reviews", REVIEWS_URL, "full_reviews");
   button.className += " mt-6";
-  section.appendChild(button);
+
+  if (section) {
+    section.appendChild(button);
+    return;
+  }
+
+  const fallback = document.createElement("section");
+  fallback.id = "full-reviews-cta";
+  fallback.className = "py-12 border-t border-white/10";
+  fallback.innerHTML = `
+    <div class="container-page flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+      <div>
+        <p class="text-xs uppercase tracking-[0.24em] text-ink-soft">Client feedback</p>
+        <h2 class="mt-2 font-serif text-3xl text-white">Read the full client reviews</h2>
+      </div>
+    </div>
+  `;
+  fallback.querySelector(".container-page")?.appendChild(button);
+  const footer = document.querySelector("footer");
+  if (footer?.parentElement) footer.parentElement.insertBefore(fallback, footer);
+  else document.body.appendChild(fallback);
 }
 
 function createClientProofSection() {
@@ -117,6 +135,7 @@ export function initSiteEnhancements() {
 
     if (
       document.querySelector("[data-enhancement='about_portfolio']") &&
+      document.querySelector("[data-enhancement='full_reviews']") &&
       document.querySelector("[data-client-grid]")
     ) {
       applied = true;
